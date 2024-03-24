@@ -41,7 +41,7 @@ class Velha:
 
         # Atualiza a jogada
         self.tabuleiro[ jogada[1]] [jogada[0]] = self.vez
-        self.jogadas = self.jogadas-1
+        self.jogadas -= 1
 
         # Verifica se o jogo acabou
         game_over = self.__ChecaVencedor() != None or self.jogadas == 0
