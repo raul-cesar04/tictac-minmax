@@ -2,6 +2,7 @@ import pygame
 from Velha import Velha
 from Spritesheet import Spritesheet
 
+# Botões
 class Button:
     rect: pygame.Rect
     pos: tuple
@@ -65,7 +66,6 @@ class Game:
             if(mouse_b):
                 b = self.__CheckButtonPressed()
                 if(b != None):
-                    print(f"Apertou o botao {b.pos[0]/128}, {b.pos[1]/128}")
                     self.velha.Jogada(( int(b.pos[0]/128), int(b.pos[1]/128)))
                     self.__Draw()
         
@@ -85,6 +85,7 @@ class Game:
         self.clock.tick()
         return
     
+    # Método para renderizar o tabuleiro
     def __DrawTabuleiro(self):
         t = self.tabuleiro
         for r in range(3):
@@ -94,11 +95,13 @@ class Game:
                 self.screen.blit(self.spritesheet.image_at((p*128, 0, 128, 128)), b.pos)
         return
     
+    # Método para renderizar textos
     def __DrawText(self, texto: str, pos: tuple, color: pygame.Color = "white"):
         img = self.font.render(texto, True, color)
         self.screen.blit(img, pos)
 
 
+    # Verifica se algum botão foi pressionado
     def __CheckButtonPressed(self)->Button:
         for r in range(3):
             for c in range(3):
