@@ -50,7 +50,8 @@ class Game:
 
         # Carrega recursos
         self.spritesheet = Spritesheet("assets/velha_128.png")
-        self.font = pygame.font.SysFont("comic_sans.ttf", 35)
+        # self.font = pygame.font.SysFont("comic_sans.ttf", 35)
+        self.font = pygame.font.Font("assets/csans.ttf", 24)
         self.__Draw()
 
     def Update(self):
@@ -95,10 +96,12 @@ class Game:
         self.__DrawText("Jogador 2: X", (400, 32))
         self.__DrawText("Vez de: "+self.velha.vez.to_str(), (16, 384))
         
+        # Fim de Jogo
         if(self.velha.fim_jogo):
             vencedor_str: str = self.velha.vencedor.to_str() if(self.velha.vencedor != None) else "Deu Velha!"
             self.__DrawText("Fim de jogo. Vencedor: "+vencedor_str, (16, 414), "red")
             self.__DrawText("Pressione 'R' para jogar novamente", (16, 444), "yellow")
+
         pygame.display.flip()
         self.clock.tick()
         return
