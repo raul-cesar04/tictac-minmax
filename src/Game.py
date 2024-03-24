@@ -50,7 +50,6 @@ class Game:
 
         # Carrega recursos
         self.spritesheet = Spritesheet("assets/velha_128.png")
-        # self.font = pygame.font.SysFont("comic_sans.ttf", 35)
         self.font = pygame.font.Font("assets/csans.ttf", 24)
         self.__Draw()
 
