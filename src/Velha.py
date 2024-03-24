@@ -19,6 +19,7 @@ class Velha:
     tabuleiro = [[0 for _ in range(3)] for _ in range(3)]
     vez: Jogadores
     jogadas: int
+
     def Inicio(self):
         # Inicia tabuleiro zerado
         self.tabuleiro = [
@@ -32,6 +33,7 @@ class Velha:
 
         # Jogo começa com o Jogador 1
         self.vez = Jogadores.P1
+
         return
 
     # Recebe uma jogada de entrada
@@ -52,4 +54,23 @@ class Velha:
 
     # Verifica o fim de jogo
     def __ChecaVencedor(self) -> Jogadores:
+        jogador: Jogadores = self.vez
+
+        # Transforma o array 2D numa matriz unidimensional (????)
+        jogadas = [0]*9
+        tab = self.tabuleiro
+
+        for r in range(3):
+            for c in range(3):
+                cell = tab[r][c]
+                if(cell == jogador):
+                    jogadas[r*3+c] = 1
         pass
+        self.__PrintMat(jogadas)
+
+    def __PrintMat(self, mat):
+        for r in range(3):
+            for c in range(3):
+                print(mat[r*3+c], end="")
+            print("")
+        return
