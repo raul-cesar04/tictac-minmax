@@ -1,4 +1,5 @@
 from enum import Enum
+from Combos import Combos
 
 # Enum Jogadores
 class Jogadores(Enum):
@@ -20,6 +21,10 @@ class Velha:
     vez: Jogadores
     jogadas: int
 
+    jogadas_vencedoras: list
+    fim_jogo: bool
+    vencedor: Jogadores
+
     def Inicio(self):
         # Inicia tabuleiro zerado
         self.tabuleiro = [
@@ -34,6 +39,10 @@ class Velha:
         # Jogo começa com o Jogador 1
         self.vez = Jogadores.P1
 
+        self.jogadas_vencedoras = Combos.GenerateCombos()
+
+        self.fim_jogo = False
+        self.vencedor = None
         return
 
     # Recebe uma jogada de entrada
@@ -46,7 +55,12 @@ class Velha:
         self.jogadas -= 1
 
         # Verifica se o jogo acabou
-        game_over = self.__ChecaVencedor() != None or self.jogadas == 0
+        self.vencedor = self.__ChecaVencedor()
+
+        self.fim_jogo = self.vencedor != None or self.jogadas == 0
+
+        if(self.fim_jogo):
+            return
 
         # Alterna a vez dos jogadores
         self.vez = Jogadores.P1 if self.vez == Jogadores.P2 else Jogadores.P2
@@ -66,11 +80,18 @@ class Velha:
                 if(cell == jogador):
                     jogadas[r*3+c] = 1
         pass
-        self.__PrintMat(jogadas)
+
+        jogada: int = Combos.ComboToBin(jogadas)
+        for j in self.jogadas_vencedoras:
+            if(jogada & j == j):
+                return jogador
+            
+
+        return None
 
     def __PrintMat(self, mat):
         for r in range(3):
             for c in range(3):
                 print(mat[r*3+c], end="")
-            print("")
+            print("", end=" ")
         return

@@ -36,6 +36,11 @@ class Game:
 
         # Jogo da velha e seus componentes
         self.velha = Velha()
+
+        # Start
+        self.Start()
+        return
+    def Start(self):
         self.velha.Inicio()
 
         # Botões do tabuleiro
@@ -47,13 +52,13 @@ class Game:
         self.spritesheet = Spritesheet("assets/velha_128.png")
         self.font = pygame.font.SysFont("comic_sans.ttf", 35)
         self.__Draw()
-        return
-    
+
     def Update(self):
 
         # Loop principal
         while self.running:
             mouse_b: bool = False
+            keys_pressed: pygame.key.ScancodeWrapper = []
             # Capturar eventos de input
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -61,14 +66,22 @@ class Game:
 
                 if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
                     mouse_b = pygame.mouse.get_pressed()[0]
+                
+                if(event.type == pygame.KEYDOWN):
+                    keys_pressed = pygame.key.get_pressed()
 
 
-            if(mouse_b):
-                b = self.__CheckButtonPressed()
-                if(b != None):
-                    self.velha.Jogada(( int(b.pos[0]/128), int(b.pos[1]/128)))
-                    self.__Draw()
-        
+            # Captura o input e processa as jogadas se o jogo ainda não tem um fim
+            if(not self.velha.fim_jogo):
+                if(mouse_b):
+                    b = self.__CheckButtonPressed()
+                    if(b != None):
+                        self.velha.Jogada(( int(b.pos[0]/128), int(b.pos[1]/128)))
+                        self.__Draw()
+            else:
+                if(len(keys_pressed) > 0 and keys_pressed[pygame.K_r]):
+                    self.Start()
+
         # Finaliza o pygame quando sair do loop
         pygame.quit()
         return
@@ -78,9 +91,14 @@ class Game:
         self.screen.fill((128, 128, 128))
 
         self.__DrawTabuleiro()
+        self.__DrawText("Jogador 1: O", (400, 8))
+        self.__DrawText("Jogador 2: X", (400, 32))
         self.__DrawText("Vez de: "+self.velha.vez.to_str(), (16, 384))
         
-
+        if(self.velha.fim_jogo):
+            vencedor_str: str = self.velha.vencedor.to_str() if(self.velha.vencedor != None) else "Deu Velha!"
+            self.__DrawText("Fim de jogo. Vencedor: "+vencedor_str, (16, 414), "red")
+            self.__DrawText("Pressione 'R' para jogar novamente", (16, 444), "yellow")
         pygame.display.flip()
         self.clock.tick()
         return
