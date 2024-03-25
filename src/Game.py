@@ -112,7 +112,7 @@ class Game:
         self.__DrawText("Vez de: "+self.velha.vez.to_str(), (16, 384))
         
         if(not MULTIPLAYER):
-            self.__DrawText("Jogando contra a CPU", (400, 56))
+            self.__DrawText("Jogando com a CPU", (400, 56))
         else:
             self.__DrawText("Jogando com Alguem", (400, 56))
 
