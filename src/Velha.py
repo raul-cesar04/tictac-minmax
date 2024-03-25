@@ -89,6 +89,8 @@ class Velha:
 
         return None
 
+    def Cpu(self)->tuple:
+        pass
     def __PrintMat(self, mat):
         for r in range(3):
             for c in range(3):

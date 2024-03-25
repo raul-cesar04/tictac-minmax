@@ -1,6 +1,10 @@
 import pygame
 from Velha import Velha
+from Velha import Jogadores
 from Spritesheet import Spritesheet
+from Ai import Ai
+
+MULTIPLAYER: bool = True # Se for verdadeira então ambos os jogadores serão controlados manualmente por jogadores. Caso contrario a IA irá tomar conta de um
 
 # Botões
 class Button:
@@ -73,10 +77,21 @@ class Game:
 
             # Captura o input e processa as jogadas se o jogo ainda não tem um fim
             if(not self.velha.fim_jogo):
-                if(mouse_b):
-                    b = self.__CheckButtonPressed()
-                    if(b != None):
-                        self.velha.Jogada(( int(b.pos[0]/128), int(b.pos[1]/128)))
+                if(MULTIPLAYER):
+                    if(mouse_b):
+                        jogada: tuple = self.__GetPlayerInput()
+                        self.velha.Jogada(jogada)
+                        self.__Draw()
+                else:
+                    # Calcula aqui a ia
+                    if(self.velha.vez == Jogadores.P1):
+                        if(mouse_b):
+                            jogada: tuple = self.__GetPlayerInput()
+                            self.velha.Jogada(jogada)
+                            self.__Draw()
+                    else:
+                        jogada: tuple = self.velha.Cpu()
+                        self.velha.Jogada(jogada)
                         self.__Draw()
             else:
                 if(len(keys_pressed) > 0 and keys_pressed[pygame.K_r]):
@@ -131,6 +146,15 @@ class Game:
                 if(b.rect.collidepoint(mouse_pos)):
                     return b
         
+        return None
+    
+    def __GetPlayerInput(self)->tuple:
+        b = self.__CheckButtonPressed()
+        if(b != None):
+            jogada: tuple = ( int(b.pos[0]/128), int(b.pos[1]/128) )
+            self.velha.Jogada(jogada)
+            self.__Draw()
+            return jogada
         return None
                 
                 
