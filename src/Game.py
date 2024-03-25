@@ -16,8 +16,12 @@ class Button:
         self.pos = pos
         self.rect = pygame.Rect(pos[0], pos[1], dimensions[0], dimensions[1])
 
+#==========
+#   Classe onde é definida as propriedades do jogo
+#   o "frontend" da aplicação onde será processada os Input dos jogadores
+#   e apresentação ao usuário por meio da biblioteca PyGame
 class Game:
-    # Pygame
+    # Pygame - Componentes PyGame
     screen: pygame.Surface
     clock: pygame.time.Clock
     running: bool
@@ -25,7 +29,8 @@ class Game:
 
     # Jogo da velha
     velha: Velha
-    tabuleiro = [[0 for _ in range(3)] for _ in range(3)]
+
+    tabuleiro = [[0 for _ in range(3)] for _ in range(3)]   # Representação tabuleiro em botões
     spritesheet: Spritesheet
 
     def __init__(self, titulo: str, width: int, height: int) -> None:
@@ -43,6 +48,8 @@ class Game:
         # Start
         self.Start()
         return
+
+    # Método que da início a partida
     def Start(self):
         self.velha.Inicio()
 
@@ -56,6 +63,7 @@ class Game:
         self.font = pygame.font.Font("assets/csans.ttf", 24)
         self.__Draw()
 
+    # Onde a lógica do jogo será processada
     def Update(self):
 
         # Loop principal
@@ -76,7 +84,7 @@ class Game:
 
             # Captura o input e processa as jogadas se o jogo ainda não tem um fim
             if(not self.velha.fim_jogo):
-                if(MULTIPLAYER):
+                if(MULTIPLAYER):        # Partida multiplayer com dois jogadores
                     if(mouse_b):
                         jogada: tuple = self.__GetPlayerInput()
                         if(jogada == None): continue
@@ -84,7 +92,7 @@ class Game:
                         self.__Draw()
                 else:
                     # Calcula aqui a ia
-                    if(self.velha.vez == Jogadores.P1):
+                    if(self.velha.vez == Jogadores.P1): # Partida com a IA alterna vez entre o jogador e a IA
                         if(mouse_b):
                             jogada: tuple = self.__GetPlayerInput()
                             if(jogada == None): continue
@@ -95,7 +103,7 @@ class Game:
                         self.velha.Jogada(jogada)
                         self.__Draw()
             else:
-                if(len(keys_pressed) > 0 and keys_pressed[pygame.K_r]):
+                if(len(keys_pressed) > 0 and keys_pressed[pygame.K_r]): # Reinicio da partida
                     self.Start()
 
         # Finaliza o pygame quando sair do loop
@@ -107,6 +115,7 @@ class Game:
         self.screen.fill((128, 128, 128))
 
         self.__DrawTabuleiro()
+
         self.__DrawText("Jogador 1: O", (400, 8))
         self.__DrawText("Jogador 2: X", (400, 32))
         self.__DrawText("Vez de: "+self.velha.vez.to_str(), (16, 384))
@@ -128,7 +137,7 @@ class Game:
         return
     
     # Método para renderizar o tabuleiro
-    def __DrawTabuleiro(self):
+    def __DrawTabuleiro(self):          # Desenha as casas do tabuleiro
         t = self.tabuleiro
         for r in range(3):
             for c in range(3):
@@ -155,6 +164,7 @@ class Game:
         
         return None
     
+    # Captura qual movimento o jogador escolheu. Ou seja qual posição no tabuleiro ele irá jogar
     def __GetPlayerInput(self)->tuple:
         b = self.__CheckButtonPressed()
         if(b != None):

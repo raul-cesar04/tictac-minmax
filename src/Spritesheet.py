@@ -1,5 +1,6 @@
 import pygame
 
+# Classe para a definição das sprites do jogo
 class Spritesheet:
     sheet: pygame.Surface
 
@@ -11,6 +12,8 @@ class Spritesheet:
             raise(SystemExit, "message")
         pass
 
+    # Retorna uma Surface do pygame contendo apenas parte da imagem original demilitada por dado retangulo 
+    # usada para renderização
     def image_at(self, rectangle) -> pygame.Surface:
         rect = pygame.Rect(rectangle)
         image = pygame.Surface(rect.size, pygame.SRCALPHA, 32).convert_alpha()

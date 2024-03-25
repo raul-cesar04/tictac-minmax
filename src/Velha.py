@@ -1,6 +1,8 @@
 from Combos import Combos
 from Ai import Ai, Jogadores
 
+# ===========
+#   Classe onde é definido o funcinamento do jogo da velha
 class Velha:
     tabuleiro = [[0 for _ in range(3)] for _ in range(3)]
     vez: Jogadores
@@ -11,6 +13,7 @@ class Velha:
     fim_jogo: bool
     vencedor: Jogadores
 
+    # O Inicio de uma partida
     def Inicio(self):
         # Inicia tabuleiro zerado
         self.tabuleiro = [
@@ -56,7 +59,7 @@ class Velha:
     # Verifica o fim de jogo
     def ChecaVencedor(self, tab: list, jogador: Jogadores) -> Jogadores:
         
-        # Transforma o array 2D numa matriz unidimensional (????)
+        # Transforma o array 2D num array unidimensional 
         jogadas = [0]*9
 
         for r in range(3):
@@ -73,12 +76,7 @@ class Velha:
 
         return None
 
+    # Realizar jogada através da IA
     def Cpu(self)->tuple:
         act: tuple = self.cpu.best_action(self.tabuleiro, self.vez)
         return act
-    def __PrintMat(self, mat):
-        for r in range(3):
-            for c in range(3):
-                print(mat[r*3+c], end="")
-            print("", end=" ")
-        return
