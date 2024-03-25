@@ -79,7 +79,7 @@ class Game:
                 if(MULTIPLAYER):
                     if(mouse_b):
                         jogada: tuple = self.__GetPlayerInput()
-                        if(jogada == None): return
+                        if(jogada == None): continue
                         self.velha.Jogada(jogada)
                         self.__Draw()
                 else:
@@ -87,6 +87,7 @@ class Game:
                     if(self.velha.vez == Jogadores.P1):
                         if(mouse_b):
                             jogada: tuple = self.__GetPlayerInput()
+                            if(jogada == None): continue
                             self.velha.Jogada(jogada)
                             self.__Draw()
                     else:
@@ -110,6 +111,12 @@ class Game:
         self.__DrawText("Jogador 2: X", (400, 32))
         self.__DrawText("Vez de: "+self.velha.vez.to_str(), (16, 384))
         
+        if(not MULTIPLAYER):
+            self.__DrawText("Jogando contra a CPU", (400, 56))
+        else:
+            self.__DrawText("Jogando com Alguem", (400, 56))
+
+
         # Fim de Jogo
         if(self.velha.fim_jogo):
             vencedor_str: str = self.velha.vencedor.to_str() if(self.velha.vencedor != None) else "Deu Velha!"

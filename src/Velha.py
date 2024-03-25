@@ -42,7 +42,7 @@ class Velha:
         self.cpu = Ai(self)
 
         # Verifica se o jogo acabou
-        self.vencedor = self.ChecaVencedor(self.tabuleiro)
+        self.vencedor = self.ChecaVencedor(self.tabuleiro, self.vez)
 
         self.fim_jogo = self.vencedor != None or self.jogadas == 0
 
@@ -54,9 +54,8 @@ class Velha:
         return
 
     # Verifica o fim de jogo
-    def ChecaVencedor(self, tab: list) -> Jogadores:
-        jogador: Jogadores = self.vez
-
+    def ChecaVencedor(self, tab: list, jogador: Jogadores) -> Jogadores:
+        
         # Transforma o array 2D numa matriz unidimensional (????)
         jogadas = [0]*9
 
@@ -66,7 +65,6 @@ class Velha:
                 if(cell == jogador):
                     jogadas[r*3+c] = 1
         pass
-
         jogada: int = Combos.ComboToBin(jogadas)
         for j in self.jogadas_vencedoras:
             if(jogada & j == j):
@@ -77,7 +75,6 @@ class Velha:
 
     def Cpu(self)->tuple:
         act: tuple = self.cpu.best_action(self.tabuleiro, self.vez)
-        print(act)
         return act
     def __PrintMat(self, mat):
         for r in range(3):

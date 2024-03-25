@@ -49,8 +49,8 @@ class Combos:
     ]
     def GenerateCombos() -> list:
         combos = []
-        for i in range(len(Combos.winCombos)):
-            combos.append(Combos.ComboToBin(Combos.winCombos[i]))
+        for combo in Combos.winCombos:
+            combos.append(Combos.ComboToBin(combo))
         
         return combos
     

@@ -49,10 +49,10 @@ class Ai:
     # jogador_atual - quem é o jogador que está jogando
     # eu - quem é o jogador que quer ser beneficiado (?)
     def __minimax(self, tabuleiro: list, jogador_atual: Jogadores, eu: Jogadores, max_depth = 9)->int:
-        w: Jogadores = self.velha.ChecaVencedor(tabuleiro)
-        if(w == eu): return 1         # Vitoria
-        if(w != None and w != eu): return -1        # Derrota
-        if(w == None and self.__is_tabuleiro_cheio(tabuleiro)): return 0 # Empate
+        oponente: Jogadores = Jogadores.P2 if eu == Jogadores.P1 else Jogadores.P1
+        if(self.velha.ChecaVencedor(tabuleiro, eu) != None): return 1         # Vitoria
+        if(self.velha.ChecaVencedor(tabuleiro, oponente) != None): return -1        # Derrota
+        if(self.__is_tabuleiro_cheio(tabuleiro)): return 0 # Empate
 
         # if(max_depth == 0): return quit()#random.randrange(-999, 999) # Heuristica temporária
 
@@ -82,21 +82,17 @@ class Ai:
     def best_action(self, tabuleiro: list, jogador: Jogadores) -> tuple:
         jogadas: list = self.__jogadas_possiveis(tabuleiro)
 
-
         best_score: float = float("-inf")
         best_action: tuple = None
-        ca = None
         # Para cada possivel jogada
         for jogada in jogadas:
             resultado: list = self.__jogada(tabuleiro, jogada, jogador)
             score = self.__minimax(resultado, Jogadores.P1 if jogador == Jogadores.P2 else Jogadores.P2, jogador)
+
             if(score > best_score):
                 best_score = score
                 best_action = jogada
-                ca = resultado
         # quit()
-            
-        self.__clean_print(ca)
         return best_action
     
     def __is_tabuleiro_cheio(self, tabuleiro: list)->bool:
@@ -109,7 +105,7 @@ class Ai:
         return ret
 
 
-    def __clean_print(self, tabuleiro: list):
+    def clean_print(self, tabuleiro: list):
         for r in range(3):
             for c in range(3):
                 print(tabuleiro[r][c].value, end=" ")
