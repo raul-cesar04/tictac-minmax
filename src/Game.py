@@ -3,7 +3,7 @@ from Velha import Velha
 from Velha import Jogadores
 from Spritesheet import Spritesheet
 
-MULTIPLAYER: bool = True # Se for verdadeira então ambos os jogadores serão controlados manualmente por jogadores. Caso contrario a IA irá tomar conta de um
+MULTIPLAYER: bool = False # Se for verdadeira então ambos os jogadores serão controlados manualmente por jogadores. Caso contrario a IA irá tomar conta de um
 
 # Botões
 class Button:
