@@ -26,6 +26,7 @@ class Velha:
         self.vez = Jogadores.P1
 
         self.jogadas_vencedoras = Combos.GenerateCombos()
+        self.cpu = Ai(self)
 
         self.fim_jogo = False
         self.vencedor = None
@@ -39,7 +40,6 @@ class Velha:
         # Atualiza a jogada
         self.tabuleiro[ jogada[0]] [jogada[1]] = self.vez
         self.jogadas -= 1
-        self.cpu = Ai(self)
 
         # Verifica se o jogo acabou
         self.vencedor = self.ChecaVencedor(self.tabuleiro, self.vez)
