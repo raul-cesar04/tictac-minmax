@@ -15,3 +15,5 @@ Trabalho da Disciplina Inteligência Artificial Sistemas de Informação UFMS
 ### [Python3 - Python Docs](https://docs.python.org/3/)
 
 ### [PyGame Lib](https://www.pygame.org/wiki/)
+
+### [Algoritmo Minimax - Fazendo uma IA para o Jogo-da-Velha | Por Sor Pinto](https://www.youtube.com/watch?v=oKZqbV1nmtQ)
