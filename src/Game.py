@@ -2,9 +2,8 @@ import pygame
 from Velha import Velha
 from Velha import Jogadores
 from Spritesheet import Spritesheet
-from Ai import Ai
 
-MULTIPLAYER: bool = True # Se for verdadeira então ambos os jogadores serão controlados manualmente por jogadores. Caso contrario a IA irá tomar conta de um
+MULTIPLAYER: bool = False # Se for verdadeira então ambos os jogadores serão controlados manualmente por jogadores. Caso contrario a IA irá tomar conta de um
 
 # Botões
 class Button:
@@ -80,6 +79,7 @@ class Game:
                 if(MULTIPLAYER):
                     if(mouse_b):
                         jogada: tuple = self.__GetPlayerInput()
+                        if(jogada == None): return
                         self.velha.Jogada(jogada)
                         self.__Draw()
                 else:
@@ -151,7 +151,7 @@ class Game:
     def __GetPlayerInput(self)->tuple:
         b = self.__CheckButtonPressed()
         if(b != None):
-            jogada: tuple = ( int(b.pos[0]/128), int(b.pos[1]/128) )
+            jogada: tuple = ( int(b.pos[1]/128), int(b.pos[0]/128) )
             self.velha.Jogada(jogada)
             self.__Draw()
             return jogada
