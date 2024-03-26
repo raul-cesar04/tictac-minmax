@@ -92,9 +92,9 @@ class Ai:
             if(score > best_score):
                 best_score = score
                 best_action = jogada
-        # quit()
         return best_action
     
+    # Verifica se tabuleiro já está completo
     def __is_tabuleiro_cheio(self, tabuleiro: list)->bool:
         ret: bool = True
 
@@ -105,6 +105,7 @@ class Ai:
         return ret
 
 
+    # Método para impressão do tabuleiro modo mais limpo para debug
     def clean_print(self, tabuleiro: list):
         for r in range(3):
             for c in range(3):
