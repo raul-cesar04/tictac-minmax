@@ -100,7 +100,7 @@ class Game:
                             self.velha.Jogada(jogada)
                             self.__Draw()
                     else:
-                        pygame.time.delay(random.randrange(1000, 2500))
+                        pygame.time.delay(random.randrange(600, 1200))
                         jogada: tuple = self.velha.Cpu()
                         self.velha.Jogada(jogada)
                         self.__Draw()
@@ -114,10 +114,23 @@ class Game:
     
     # Loop de renderização
     def __Draw(self):
-        self.screen.fill((128, 128, 128))
+        # Screen Background Color
+        self.screen.fill((0, 0, 0))
 
+        line_thickness = 6
+        line_color = (255, 214, 30)
+
+        # Game Board
+        pygame.draw.line(self.screen, line_color, (0,128), (384, 128), line_thickness)
+        pygame.draw.line(self.screen, line_color, (0,256), (384, 256), line_thickness)
+
+        pygame.draw.line(self.screen, line_color, (128, 384), (128, 0), line_thickness)
+        pygame.draw.line(self.screen, line_color, (256, 384), (256, 0), line_thickness)
+
+        # Game Sprites
         self.__DrawTabuleiro()
 
+        # Game UI
         self.__DrawText("Jogador 1: O", (400, 8))
         self.__DrawText("Jogador 2: X", (400, 32))
         self.__DrawText("Vez de: "+self.velha.vez.to_str(), (16, 384))

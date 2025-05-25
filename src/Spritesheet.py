@@ -6,7 +6,7 @@ class Spritesheet:
 
     def __init__(self, filename: str) -> None:
         try:
-            self.sheet = pygame.image.load(filename).convert()
+            self.sheet = pygame.image.load(filename).convert_alpha()
         except(pygame.error):
             print("Não foi possível carregar a spritesheet da imagem: "+filename)
             raise(SystemExit, "message")
