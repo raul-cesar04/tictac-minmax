@@ -11,8 +11,8 @@ class Jogadores(Enum):
     def to_str(self) -> str:
         values = [
             "Velha",
-            "Jogador 1",
-            "Jogador 2"
+            "X",
+            "O"
         ]
 
         return values[self.value]

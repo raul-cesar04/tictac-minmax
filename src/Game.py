@@ -45,6 +45,7 @@ class Game:
 
         # Jogo da velha e seus componentes
         self.velha = Velha()
+        self.ai_delay_time = 0
 
         # Start
         self.Start()
@@ -61,7 +62,7 @@ class Game:
 
         # Carrega recursos
         self.spritesheet = Spritesheet("assets/velha_128.png")
-        self.font = pygame.font.Font("assets/csans.ttf", 24)
+        self.font = pygame.font.Font("assets/gamefont.ttf", 20)
         self.__Draw()
 
     # Onde a lógica do jogo será processada
@@ -100,7 +101,8 @@ class Game:
                             self.velha.Jogada(jogada)
                             self.__Draw()
                     else:
-                        pygame.time.delay(random.randrange(600, 1200))
+                        pygame.time.delay(self.ai_delay_time)
+                        self.ai_delay_time = random.randrange(650,1200)
                         jogada: tuple = self.velha.Cpu()
                         self.velha.Jogada(jogada)
                         self.__Draw()
@@ -131,20 +133,20 @@ class Game:
         self.__DrawTabuleiro()
 
         # Game UI
-        self.__DrawText("Jogador 1: O", (400, 8))
-        self.__DrawText("Jogador 2: X", (400, 32))
+        self.__DrawText("Jogador 1: X", (400, 8))
+        self.__DrawText(f"Jogador 2: O{"(CPU)" if not MULTIPLAYER else ""}", (400, 32))
         self.__DrawText("Vez de: "+self.velha.vez.to_str(), (16, 384))
         
         if(not MULTIPLAYER):
-            self.__DrawText("Jogando com a CPU", (400, 56))
+            self.__DrawText("Jogador vs CPU", (400, 56))
         else:
-            self.__DrawText("Jogando com Alguem", (400, 56))
+            self.__DrawText("Jogador 1 vs Jogador 2", (400, 56))
 
 
         # Fim de Jogo
         if(self.velha.fim_jogo):
-            vencedor_str: str = self.velha.vencedor.to_str() if(self.velha.vencedor != None) else "Deu Velha!"
-            self.__DrawText("Fim de jogo. Vencedor: "+vencedor_str, (16, 414), "red")
+            vencedor_str: str = self.velha.vencedor.to_str()+" venceu!" if(self.velha.vencedor != None) else "Deu Velha!"
+            self.__DrawText("Fim de jogo. "+vencedor_str, (16, 414), "red")
             self.__DrawText("Pressione 'R' para jogar novamente", (16, 444), "yellow")
 
         pygame.display.flip()
