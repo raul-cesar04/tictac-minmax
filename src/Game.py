@@ -1,4 +1,5 @@
 import pygame
+import random
 from Velha import Velha
 from Velha import Jogadores
 from Spritesheet import Spritesheet
@@ -99,6 +100,7 @@ class Game:
                             self.velha.Jogada(jogada)
                             self.__Draw()
                     else:
+                        pygame.time.delay(random.randrange(1000, 2500))
                         jogada: tuple = self.velha.Cpu()
                         self.velha.Jogada(jogada)
                         self.__Draw()
