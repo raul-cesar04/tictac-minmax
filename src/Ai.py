@@ -48,13 +48,13 @@ class Ai:
     # tabuleiro - matriz representando o tabuleiro
     # jogador_atual - quem é o jogador que está jogando
     # eu - quem é o jogador que quer ser beneficiado (?)
-    def __minimax(self, tabuleiro: list, jogador_atual: Jogadores, eu: Jogadores, max_depth = 9)->int:
+    def __minimax(self, tabuleiro: list, jogador_atual: Jogadores, eu: Jogadores, max_depth = 6)->int:
         oponente: Jogadores = Jogadores.P2 if eu == Jogadores.P1 else Jogadores.P1
         if(self.velha.ChecaVencedor(tabuleiro, eu) != None): return 1         # Vitoria
         if(self.velha.ChecaVencedor(tabuleiro, oponente) != None): return -1        # Derrota
         if(self.__is_tabuleiro_cheio(tabuleiro)): return 0 # Empate
 
-        # if(max_depth == 0): return quit()#random.randrange(-999, 999) # Heuristica temporária
+        if(max_depth == 0): return random.randrange(-999, 999) # Heuristica temporária
 
 
         jogadas: list = self.__jogadas_possiveis(tabuleiro)
